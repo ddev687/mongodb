@@ -1,33 +1,23 @@
-var mongoose = require('mongoose');
+const express=require('express');
+const bodyParser=require('body-parser')
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/StudentTest');
+var {mongoose} = require('C:/Users/lcom81_one/Desktop/NodeJs/mongodb/server/db/mongoose');
+var {stud} = require('./models/stud');
 
-var StudTest = mongoose.model('stud', {
-  name: {
-    type: String,
-    require:true,
-    minlength:1,
-    trim:true
-  },
-  age: {
-    type: Number,
-    require:true
-  },
-  status: {
-    type: Boolean,
-    default:false
-  }
+var app=express();
+
+app.use(bodyParser.json());
+
+app.post('/studs',(req,res)=>{
+	var newStud = new stud({
+		name:req.body.name,
+		age:req.body.age,
+		status:req.body.status
+	});
+	newStud.save().then((doc)=>{
+		res.send(doc);
+	},(e)=>{
+		res.send(e);
+	})
 });
-
-var newStud=new StudTest({
-	name:'Arjun',
-	age:23,
-	status:false
-});
-
-newStud.save().then((doc) => {
-  console.log(JSON.stringify(doc, undefined, 2));
-}, (e) => {
-  console.log('Unable to save', e);
-});
+app.listen(3000);

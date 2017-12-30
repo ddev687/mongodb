@@ -1,38 +1,39 @@
 const express=require('express');
 const bodyParser=require('body-parser')
 const {ObjectId}=require('mongodb');
+const _=require('lodash');
 
 var {mongoose} = require('C:/Users/lcom81_one/Desktop/NodeJs/mongodb/server/db/mongoose');
-var {stud} = require('./models/stud');
+var {user} = require('./models/user');
 
 var app=express();
 
 app.use(bodyParser.json());
 
-app.post('/studs',(req,res)=>{
-	var newStud = new stud({
+app.post('/users',(req,res)=>{
+	var newUser = new user({
 		name:req.body.name,
-		age:req.body.age,
-		status:req.body.status
+		email:req.body.email,
+		password:req.body.password
 	});
-	newStud.save().then((doc)=>{
+	newUser.save().then((doc)=>{
 		res.send(doc);
 	},(e)=>{
 		res.send(e);
 	});
 });
 
-app.get('/studs/:id',(req,res)=>{
+app.get('/users/:id',(req,res)=>{
 	var id=req.params.id;
 	if(!ObjectId.isValid(id)){
 		return res.status(404).send();
 		//return console.log("Invalid Id");
 	}
-	stud.findById(id).then((stud)=>{
-		if(!stud){
+	user.findById(id).then((user)=>{
+		if(!user){
 			return res.status(404).send();
 		}
-		res.send({stud});
+		res.send({user});
 	}).catch((e)=>{
 		res.status(400).send();
 	})

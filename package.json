@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "validator": "^9.2.0"
   },
   "devDependencies": {
     "expect": "^22.0.3",

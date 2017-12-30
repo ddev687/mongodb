@@ -2,9 +2,8 @@
 const {MongoClient}=require('mongodb');
 
 MongoClient.connect('mongodb://localhost:27017/student',(err,db)=>{
-	if(err){
-		return console.log("Error: "+err);
-	}
+	if(err) return console.log("Error: "+err);
+	
 	console.log("Success");
 	db.collection('stud').insertOne({
 		_id:102,
